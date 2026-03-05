@@ -247,93 +247,73 @@
   </nav>
 
   <!-- ══════════════════════════════════════
-       HERO — split editorial layout
+       HERO — full-screen video background
   ══════════════════════════════════════ -->
-  <section class="relative min-h-[92vh] flex flex-col lg:flex-row overflow-hidden">
+  <section class="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#1a2832]">
 
-    <!-- Left: Dark typographic panel -->
-    <div class="relative lg:w-[52%] bg-[#1a2832] flex items-center px-10 sm:px-16 lg:px-20 py-24 lg:py-0 order-2 lg:order-1">
-      <div class="absolute inset-0 pointer-events-none">
-        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 10% 80%, rgba(93,184,39,0.14) 0%, transparent 55%), radial-gradient(ellipse at 90% 10%, rgba(42,139,139,0.1) 0%, transparent 50%);"></div>
-        <svg class="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg"><filter id="n2"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n2)"/></svg>
-        <!-- Decorative vertical rule -->
-        <div class="absolute right-0 top-[10%] bottom-[10%] w-px" style="background: linear-gradient(to bottom, transparent, rgba(93,184,39,0.4), transparent);"></div>
+    <!-- Video background -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <iframe
+        src="https://www.youtube.com/embed/T-h__sLdEOM?autoplay=1&mute=1&loop=1&playlist=T-h__sLdEOM&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&modestbranding=1&iv_load_policy=3"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        aria-hidden="true"
+        style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:177.78vh; height:100vh; min-width:100%; min-height:56.25vw; pointer-events:none;"
+      ></iframe>
+    </div>
+
+    <!-- Overlays -->
+    <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(135deg, rgba(26,40,50,0.82) 0%, rgba(26,50,40,0.72) 50%, rgba(26,50,50,0.78) 100%);"></div>
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 20% 60%, rgba(93,184,39,0.12) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(42,139,139,0.08) 0%, transparent 50%);"></div>
+    <!-- Decorative circles -->
+    <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full border border-green-500/10 pointer-events-none"></div>
+    <div class="absolute top-1/3 right-1/3 w-64 h-64 rounded-full border border-teal-500/10 pointer-events-none"></div>
+    <div class="absolute bottom-16 left-16 w-48 h-48 rounded-full bg-green-500/5 pointer-events-none"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center py-28">
+      <!-- Label -->
+      <div class="flex items-center justify-center gap-3 mb-8">
+        <span class="block w-8 h-px bg-green-500"></span>
+        <span class="text-green-400 text-xs font-bold tracking-[0.18em] uppercase font-sans">Fort Bend Community Church</span>
+        <span class="block w-8 h-px bg-green-500"></span>
       </div>
 
-      <div class="relative z-10 max-w-lg">
-        <!-- Label -->
-        <div class="flex items-center gap-3 mb-8">
-          <span class="block w-8 h-px bg-green-500"></span>
-          <span class="text-green-400 text-xs font-bold tracking-[0.18em] uppercase font-sans">Fort Bend Community Church</span>
-        </div>
+      <!-- Headline -->
+      <h1 class="font-serif font-black text-white leading-tight mb-6" style="font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: -0.02em; line-height: 1.05;">
+        歡迎來到<br />
+        <span style="color: #5DB827;">中文堂</span>
+      </h1>
 
-        <!-- Main headline: vertical-rhythm Chinese typography -->
-        <h1 class="font-serif font-black text-white leading-tight mb-6" style="font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.02em; line-height: 1.1;">
-          歡迎來到<br />
-          <span style="color: #5DB827;">中文堂</span>
-        </h1>
+      <p class="text-gray-200 font-serif text-xl italic mb-8 mx-auto max-w-xl" style="line-height: 1.8;">
+        「追求神的心意，使萬民成為基督的門徒。」
+      </p>
+      <p class="text-gray-300 font-sans text-base mb-10 mx-auto max-w-lg" style="line-height: 1.8;">
+        服侍國語及粵語兩個語言群體，在密蘇里城、珍珠蘭及列治文三個會區與主相遇。
+      </p>
 
-        <p class="text-gray-300 mb-3 font-serif text-lg italic" style="line-height: 1.8;">
-          「追求神的心意，
-        </p>
-        <p class="text-gray-300 mb-8 font-serif text-lg italic" style="line-height: 1.8;">
-          使萬民成為基督的門徒。」
-        </p>
-        <p class="text-gray-400 text-sm mb-10 font-sans" style="line-height: 1.8;">
-          我們是福特灣華人教會，服侍國語及粵語兩個語言群體，在密蘇里城、珍珠蘭及列治文三個會區與主相遇。
-        </p>
+      <div class="flex flex-wrap gap-4 justify-center mb-12">
+        <a href="#services" class="btn-primary font-sans">主日崇拜時間</a>
+        <a href="#contact" class="btn-outline-white font-sans">聯絡我們</a>
+      </div>
 
-        <div class="flex flex-wrap gap-4">
-          <a href="#services" class="btn-primary font-sans">主日崇拜時間</a>
-          <a href="#contact" class="btn-outline-white font-sans">聯絡我們</a>
-        </div>
-
-        <!-- Language tabs -->
-        <div class="mt-12 flex gap-3">
-          <a href="#mandarin" class="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-green-500 transition-colors">
-            <span class="w-2 h-2 rounded-full bg-green-500"></span>
-            <span class="text-white/70 group-hover:text-white text-sm font-sans transition-colors">國語堂</span>
-          </a>
-          <a href="#cantonese" class="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-teal-500 transition-colors">
-            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
-            <span class="text-white/70 group-hover:text-white text-sm font-sans transition-colors">粵語堂</span>
-          </a>
-        </div>
+      <!-- Language tabs -->
+      <div class="flex gap-3 justify-center">
+        <a href="#mandarin" class="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-green-500 transition-colors">
+          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+          <span class="text-white/70 group-hover:text-white text-sm font-sans transition-colors">國語堂</span>
+        </a>
+        <a href="#cantonese" class="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-teal-500 transition-colors">
+          <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+          <span class="text-white/70 group-hover:text-white text-sm font-sans transition-colors">粵語堂</span>
+        </a>
       </div>
     </div>
 
-    <!-- Right: Video panel -->
-    <div class="relative lg:w-[48%] min-h-[50vh] lg:min-h-0 order-1 lg:order-2 overflow-hidden">
-      <div class="absolute inset-0" style="top:-20%; bottom:-20%;">
-        <iframe
-          src="https://www.youtube.com/embed/T-h__sLdEOM?autoplay=1&mute=1&loop=1&playlist=T-h__sLdEOM&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&modestbranding=1&iv_load_policy=3"
-          frameborder="0"
-          allow="autoplay; fullscreen"
-          class="w-full h-full"
-          style="pointer-events:none;"
-          title="中文堂敬拜"
-        ></iframe>
-      </div>
-      <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26,40,50,0.3) 0%, transparent 60%), linear-gradient(to bottom, transparent 60%, rgba(26,40,50,0.7) 100%);"></div>
-
-      <!-- Floating service badge -->
-      <div class="absolute bottom-8 left-8 right-8 lg:left-10 lg:right-10">
-        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20">
-          <p class="text-white/60 text-xs font-sans mb-2 tracking-widest uppercase">本主日崇拜</p>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <p class="text-green-300 text-xs font-sans mb-0.5">國語崇拜</p>
-              <p class="text-white font-serif font-bold text-lg">11:15 AM</p>
-              <p class="text-white/60 text-xs font-sans">— 12:30 PM</p>
-            </div>
-            <div>
-              <p class="text-teal-300 text-xs font-sans mb-0.5">粵語崇拜</p>
-              <p class="text-white font-serif font-bold text-lg">1:30 PM</p>
-              <p class="text-white/60 text-xs font-sans">— 2:45 PM</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+      <span class="text-white text-xs font-sans tracking-widest uppercase">向下滑動</span>
+      <svg class="w-4 h-4 text-white animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
     </div>
   </section>
 
