@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中文堂 — Fort Bend Community Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Merriweather:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            green: {
+              50: '#f2fae8', 100: '#e0f4c8', 200: '#c3e99a', 300: '#9dd864',
+              400: '#79c538', 500: '#5DB827', 600: '#4a961e', 700: '#3a751a',
+              800: '#2e5c18', 900: '#264d17',
+            },
+            teal: {
+              50: '#f0fafa', 100: '#d8f2f2', 200: '#b1e5e5', 300: '#7ed0d0',
+              400: '#4bb4b4', 500: '#2A8B8B', 600: '#237474', 700: '#1d5d5d',
+              800: '#184d4d', 900: '#154040',
+            },
+            ink: { DEFAULT: '#1a2832' },
+          },
+          fontFamily: {
+            serif: ['Noto Serif TC', 'Merriweather', 'Georgia', 'serif'],
+            sans:  ['Noto Sans TC', 'Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+
+    /* ── Nav ─────────────────────────────── */
+    .nav-link {
+      position: relative; color: #374151; font-weight: 500; font-size: 0.875rem;
+      transition: color 200ms ease;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 2px; background: #5DB827;
+      transition: width 250ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .nav-link:hover { color: #5DB827; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid #5DB827; outline-offset: 4px; border-radius: 2px; }
+
+    .btn-primary {
+      background: #5DB827; color: white; font-weight: 600;
+      padding: 0.75rem 2rem; border-radius: 0.5rem; font-size: 0.9375rem;
+      transition: transform 150ms cubic-bezier(0.34,1.56,0.64,1), background 150ms ease, box-shadow 150ms ease;
+      box-shadow: 0 2px 8px rgba(93,184,39,0.3), 0 1px 2px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #4a961e; box-shadow: 0 4px 16px rgba(93,184,39,0.4); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-outline-white {
+      color: white; font-weight: 600; border: 1.5px solid rgba(255,255,255,0.5);
+      padding: 0.75rem 2rem; border-radius: 0.5rem; font-size: 0.9375rem;
+      transition: background 150ms ease, border-color 150ms ease;
+      display: inline-block;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.12); border-color: white; }
+
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute; top: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%) scaleY(0.95); transform-origin: top center;
+      background: white; border-radius: 0.75rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+      padding: 0.5rem; min-width: 180px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 50;
+    }
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu {
+      opacity: 1; pointer-events: auto; transform: translateX(-50%) scaleY(1);
+    }
+    .dropdown-item {
+      display: block; padding: 0.5rem 1rem; border-radius: 0.5rem;
+      font-size: 0.875rem; color: #374151; font-weight: 500;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .dropdown-item:hover { background: #f2fae8; color: #5DB827; }
+
+    #mobile-menu {
+      transition: max-height 350ms cubic-bezier(0.4,0,0.2,1), opacity 250ms ease;
+      max-height: 0; overflow: hidden; opacity: 0;
+    }
+    #mobile-menu.open { max-height: 700px; opacity: 1; }
+
+    /* ── Scroll reveal ─────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 650ms ease, transform 650ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0; transform: translateX(-32px);
+      transition: opacity 650ms ease, transform 650ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0; transform: translateX(32px);
+      transition: opacity 650ms ease, transform 650ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── Section label ─────────────────── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #5DB827; margin-bottom: 0.75rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 20px; height: 2px;
+      background: #5DB827; border-radius: 1px; flex-shrink: 0;
+    }
+
+    /* ── Ticker ────────────────────────── */
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ticker-track { display: flex; animation: ticker 28s linear infinite; width: max-content; }
+    .ticker-track:hover { animation-play-state: paused; }
+
+    /* ── Pastor card ───────────────────── */
+    .pastor-card {
+      background: white; border-radius: 1.25rem;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.04);
+      overflow: hidden;
+      transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 300ms ease;
+    }
+    .pastor-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(93,184,39,0.14), 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .pastor-card img { width: 100%; height: 220px; object-fit: cover; object-position: top; }
+
+    /* ── Ministry tile ─────────────────── */
+    .ministry-tile {
+      border-radius: 1.25rem; overflow: hidden; position: relative;
+      transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 300ms ease;
+      cursor: default;
+    }
+    .ministry-tile:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.14); }
+
+    /* ── Time block ────────────────────── */
+    .time-block {
+      border-radius: 1.25rem; padding: 2rem 1.75rem;
+      transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 250ms ease;
+    }
+    .time-block:hover { transform: translateY(-4px); }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-800 antialiased">
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav id="navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100" style="box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);" role="navigation" aria-label="主導覽">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex-shrink-0 rounded" aria-label="返回主頁">
+          <img src="brand-assets/fbcc-web-logo1-244x81.png" alt="Fort Bend Community Church" class="h-10 w-auto" />
+        </a>
+
+        <div class="hidden lg:flex items-center gap-6">
+          <div class="dropdown">
+            <button class="nav-link flex items-center gap-1" aria-haspopup="true">
+              關於教會
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="about.html" class="dropdown-item">關於我們</a>
+              <a href="staff.html" class="dropdown-item">同工團隊</a>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button class="nav-link flex items-center gap-1" aria-haspopup="true">
+              事工
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="#youth" class="dropdown-item">青少年事工</a>
+              <a href="#children" class="dropdown-item">兒童事工</a>
+              <a href="#adult" class="dropdown-item">成人教育</a>
+              <a href="#prayer" class="dropdown-item">禱告中心</a>
+            </div>
+          </div>
+
+          <a href="index.html#sermons" class="nav-link">講道</a>
+          <a href="index.html#events" class="nav-link">活動</a>
+
+          <div class="dropdown">
+            <button class="nav-link flex items-center gap-1" aria-haspopup="true">
+              會區
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Missouri City 主堂</a>
+              <a href="#" class="dropdown-item">Pearland 堂</a>
+              <a href="#" class="dropdown-item">Richmond 堂</a>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button class="nav-link flex items-center gap-1" style="color:#5DB827;" aria-haspopup="true">
+              語言
+              <svg class="w-3.5 h-3.5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="index.html" class="dropdown-item">English</a>
+              <a href="chinese.html" class="dropdown-item" style="color:#5DB827;background:#f2fae8;">中文堂</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-3">
+          <a href="index.html#give" class="btn-primary text-sm py-2 px-5">奉獻</a>
+        </div>
+
+        <button id="menu-toggle" class="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-green-50 transition-colors" aria-label="開關選單" aria-expanded="false">
+          <svg id="menu-icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+        <a href="about.html" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">關於我們</a>
+        <a href="staff.html" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">同工團隊</a>
+        <a href="#youth" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">青少年事工</a>
+        <a href="#children" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">兒童事工</a>
+        <a href="index.html#sermons" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">講道</a>
+        <a href="index.html#events" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">活動</a>
+        <div class="pt-2 pb-1 flex gap-3">
+          <a href="index.html" class="flex-1 text-center px-4 py-3 rounded-lg border border-gray-200 text-gray-700 font-medium text-sm hover:bg-gray-50 transition-colors">English</a>
+          <a href="index.html#give" class="flex-1 btn-primary text-center text-sm py-3">奉獻</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       HERO — split editorial layout
+  ══════════════════════════════════════ -->
+  <section class="relative min-h-[92vh] flex flex-col lg:flex-row overflow-hidden">
+
+    <!-- Left: Dark typographic panel -->
+    <div class="relative lg:w-[52%] bg-[#1a2832] flex items-center px-10 sm:px-16 lg:px-20 py-24 lg:py-0 order-2 lg:order-1">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 10% 80%, rgba(93,184,39,0.14) 0%, transparent 55%), radial-gradient(ellipse at 90% 10%, rgba(42,139,139,0.1) 0%, transparent 50%);"></div>
+        <svg class="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg"><filter id="n2"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n2)"/></svg>
+        <!-- Decorative vertical rule -->
+        <div class="absolute right-0 top-[10%] bottom-[10%] w-px" style="background: linear-gradient(to bottom, transparent, rgba(93,184,39,0.4), transparent);"></div>
+      </div>
+
+      <div class="relative z-10 max-w-lg">
+        <!-- Label -->
+        <div class="flex items-center gap-3 mb-8">
+          <span class="block w-8 h-px bg-green-500"></span>
+          <span class="text-green-400 text-xs font-bold tracking-[0.18em] uppercase font-sans">Fort Bend Community Church</span>
+        </div>
+
+        <!-- Main headline: vertical-rhythm Chinese typography -->
+        <h1 class="font-serif font-black text-white leading-tight mb-6" style="font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.02em; line-height: 1.1;">
+          歡迎來到<br />
+          <span style="color: #5DB827;">中文堂</span>
+        </h1>
+
+        <p class="text-gray-300 mb-3 font-serif text-lg italic" style="line-height: 1.8;">
+          「追求神的心意，
+        </p>
+        <p class="text-gray-300 mb-8 font-serif text-lg italic" style="line-height: 1.8;">
+          使萬民成為基督的門徒。」
+        </p>
+        <p class="text-gray-400 text-sm mb-10 font-sans" style="line-height: 1.8;">
+          我們是福特灣華人教會，服侍國語及粵語兩個語言群體，在密蘇里城、珍珠蘭及列治文三個會區與主相遇。
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#services" class="btn-primary font-sans">主日崇拜時間</a>
+          <a href="#contact" class="btn-outline-white font-sans">聯絡我們</a>
+        </div>
+
+        <!-- Language tabs -->
+        <div class="mt-12 flex gap-3">
+          <a href="#mandarin" class="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-green-500 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            <span class="text-white/70 group-hover:text-white text-sm font-sans transition-colors">國語堂</span>
+          </a>
+          <a href="#cantonese" class="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-teal-500 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+            <span class="text-white/70 group-hover:text-white text-sm font-sans transition-colors">粵語堂</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Image collage panel -->
+    <div class="relative lg:w-[48%] min-h-[50vh] lg:min-h-0 order-1 lg:order-2 overflow-hidden">
+      <img src="https://placehold.co/900x1100/1a3a2a/5DB827?text=Chinese+Ministry" alt="中文堂敬拜" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26,40,50,0.3) 0%, transparent 60%), linear-gradient(to bottom, transparent 60%, rgba(26,40,50,0.7) 100%);"></div>
+
+      <!-- Floating service badge -->
+      <div class="absolute bottom-8 left-8 right-8 lg:left-10 lg:right-10">
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20">
+          <p class="text-white/60 text-xs font-sans mb-2 tracking-widest uppercase">本主日崇拜</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <p class="text-green-300 text-xs font-sans mb-0.5">國語崇拜</p>
+              <p class="text-white font-serif font-bold text-lg">11:15 AM</p>
+              <p class="text-white/60 text-xs font-sans">— 12:30 PM</p>
+            </div>
+            <div>
+              <p class="text-teal-300 text-xs font-sans mb-0.5">粵語崇拜</p>
+              <p class="text-white font-serif font-bold text-lg">1:30 PM</p>
+              <p class="text-white/60 text-xs font-sans">— 2:45 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       ANNOUNCEMENT TICKER
+  ══════════════════════════════════════ -->
+  <div class="bg-green-500 py-3 overflow-hidden">
+    <div class="ticker-track">
+      <span class="inline-flex items-center gap-8 px-8 text-white font-sans text-sm font-medium whitespace-nowrap">
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年聖經背誦比賽正式開始，歡迎各年齡層參加</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 四旬期靈修活動：2026 年 3 月 — 歡迎一同禁食禱告</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年愛心體育義賣，支持宣教事工</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 冬令營報名進行中，名額有限，請盡早報名</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 小組查經報名：各時段均有名額，歡迎加入</span>
+      </span>
+      <!-- Duplicate for seamless loop -->
+      <span class="inline-flex items-center gap-8 px-8 text-white font-sans text-sm font-medium whitespace-nowrap" aria-hidden="true">
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年聖經背誦比賽正式開始，歡迎各年齡層參加</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 四旬期靈修活動：2026 年 3 月 — 歡迎一同禁食禱告</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年愛心體育義賣，支持宣教事工</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 冬令營報名進行中，名額有限，請盡早報名</span>
+        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 小組查經報名：各時段均有名額，歡迎加入</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SERVICE TIMES
+  ══════════════════════════════════════ -->
+  <section id="services" class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-16 reveal">
+        <p class="section-label justify-center">主日聚會</p>
+        <h2 class="font-serif font-black text-gray-900 text-4xl sm:text-5xl mt-2" style="letter-spacing: -0.03em;">主日崇拜時間</h2>
+        <p class="text-gray-500 mt-4 font-sans" style="line-height: 1.8;">每週主日，我們在三個地點同心敬拜</p>
+      </div>
+
+      <!-- Time cards — horizontal trio -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Mandarin -->
+        <div class="time-block bg-white border border-green-100 reveal" style="box-shadow: 0 2px 12px rgba(93,184,39,0.08), 0 1px 4px rgba(0,0,0,0.04);">
+          <div class="flex items-start justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center">
+              <svg class="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <span class="text-xs font-sans font-bold tracking-widest text-green-500 uppercase">國語堂</span>
+          </div>
+          <p class="font-serif font-black text-gray-900 text-4xl mb-1" style="letter-spacing: -0.02em;">11:15</p>
+          <p class="text-gray-400 font-sans text-sm mb-5">— 12:30 PM &nbsp;·&nbsp; 主日</p>
+          <div class="space-y-2">
+            <p class="font-sans text-sm text-gray-700 flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              7707 Hwy 6, Missouri City
+            </p>
+            <p class="font-sans text-sm text-gray-600 flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              沈珍妮牧師・李景利牧師
+            </p>
+          </div>
+        </div>
+
+        <!-- Cantonese -->
+        <div class="time-block bg-white border border-teal-100 reveal" style="box-shadow: 0 2px 12px rgba(42,139,139,0.08), 0 1px 4px rgba(0,0,0,0.04);">
+          <div class="flex items-start justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center">
+              <svg class="w-6 h-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <span class="text-xs font-sans font-bold tracking-widest text-teal-500 uppercase">粵語堂</span>
+          </div>
+          <p class="font-serif font-black text-gray-900 text-4xl mb-1" style="letter-spacing: -0.02em;">1:30</p>
+          <p class="text-gray-400 font-sans text-sm mb-5">— 2:45 PM &nbsp;·&nbsp; 主日</p>
+          <div class="space-y-2">
+            <p class="font-sans text-sm text-gray-700 flex items-center gap-2">
+              <svg class="w-4 h-4 text-teal-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              7707 Hwy 6, Missouri City
+            </p>
+            <p class="font-sans text-sm text-gray-600 flex items-center gap-2">
+              <svg class="w-4 h-4 text-teal-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              關啟勤牧師
+            </p>
+          </div>
+        </div>
+
+        <!-- Children -->
+        <div class="time-block bg-[#1a2832] reveal" style="box-shadow: 0 2px 12px rgba(0,0,0,0.12);">
+          <div class="flex items-start justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+              <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </div>
+            <span class="text-xs font-sans font-bold tracking-widest text-green-400 uppercase">兒童崇拜</span>
+          </div>
+          <p class="font-serif font-black text-white text-4xl mb-1" style="letter-spacing: -0.02em;">9:30</p>
+          <p class="text-gray-400 font-sans text-sm mb-5">— 12:30 PM &nbsp;·&nbsp; 主日</p>
+          <div class="space-y-2">
+            <p class="font-sans text-sm text-gray-300 flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              7707 Hwy 6, Missouri City
+            </p>
+            <p class="font-sans text-sm text-gray-400 flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              英語、國語、粵語同步進行
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       MANDARIN PASTORAL TEAM
+  ══════════════════════════════════════ -->
+  <section id="mandarin" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section header: side-by-side with decorative border -->
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6 reveal">
+        <div>
+          <p class="section-label">牧師團隊</p>
+          <h2 class="font-serif font-black text-gray-900 text-4xl sm:text-5xl mt-1" style="letter-spacing: -0.03em;">
+            國語堂
+            <span class="inline-block w-3 h-3 rounded-full bg-green-500 ml-2 mb-2 align-middle"></span>
+          </h2>
+        </div>
+        <p class="text-gray-500 font-sans max-w-sm lg:text-right" style="line-height: 1.8;">
+          我們的國語堂牧師團隊以愛心服侍，引領會眾在信仰上成長。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+        <!-- Senior -->
+        <div class="pastor-card reveal lg:col-span-1">
+          <img src="brand-assets/staff/brian-lam.jpg" alt="布萬藍牧師" />
+          <div class="p-4">
+            <h3 class="font-serif font-bold text-gray-900 text-base mb-0.5">布萬藍牧師</h3>
+            <p class="text-green-600 text-xs font-sans font-semibold">主任牧師</p>
+          </div>
+        </div>
+        <div class="pastor-card reveal lg:col-span-1">
+          <img src="brand-assets/staff/jenny-shan.jpg" alt="沈珍妮牧師" />
+          <div class="p-4">
+            <h3 class="font-serif font-bold text-gray-900 text-base mb-0.5">沈珍妮牧師</h3>
+            <p class="text-green-600 text-xs font-sans font-semibold">國語堂牧師</p>
+          </div>
+        </div>
+        <div class="pastor-card reveal lg:col-span-1">
+          <img src="brand-assets/staff/kai-yi-chen.jpg" alt="陳凱億牧師" />
+          <div class="p-4">
+            <h3 class="font-serif font-bold text-gray-900 text-base mb-0.5">陳凱億牧師</h3>
+            <p class="text-green-600 text-xs font-sans font-semibold">國語堂牧師</p>
+          </div>
+        </div>
+        <div class="pastor-card reveal lg:col-span-1">
+          <img src="brand-assets/staff/jing-li.jpg" alt="李景利牧師" />
+          <div class="p-4">
+            <h3 class="font-serif font-bold text-gray-900 text-base mb-0.5">李景利牧師</h3>
+            <p class="text-green-600 text-xs font-sans font-semibold">事工牧師</p>
+          </div>
+        </div>
+        <div class="pastor-card reveal lg:col-span-1">
+          <img src="brand-assets/staff/susan-wang.jpg" alt="王秀珍姊妹" />
+          <div class="p-4">
+            <h3 class="font-serif font-bold text-gray-900 text-base mb-0.5">王秀珍姊妹</h3>
+            <p class="text-gray-500 text-xs font-sans font-medium">行政助理</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CANTONESE PASTORAL TEAM
+  ══════════════════════════════════════ -->
+  <section id="cantonese" class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6 reveal">
+        <div>
+          <p class="section-label" style="color:#2A8B8B;">
+            <span style="background:#2A8B8B; width:20px; height:2px; display:inline-block; border-radius:1px;"></span>
+            牧師團隊
+          </p>
+          <h2 class="font-serif font-black text-gray-900 text-4xl sm:text-5xl mt-1" style="letter-spacing: -0.03em;">
+            粵語堂
+            <span class="inline-block w-3 h-3 rounded-full bg-teal-500 ml-2 mb-2 align-middle"></span>
+          </h2>
+        </div>
+        <p class="text-gray-500 font-sans max-w-sm lg:text-right" style="line-height: 1.8;">
+          我們的粵語堂牧師以廣東話服侍，建立香港及廣東語系的弟兄姊妹。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+        <div class="pastor-card reveal border-l-2" style="border-color:#2A8B8B;">
+          <img src="brand-assets/staff/kenny-kwan.jpg" alt="關啟勤牧師" />
+          <div class="p-4">
+            <h3 class="font-serif font-bold text-gray-900 text-base mb-0.5">關啟勤牧師</h3>
+            <p class="font-sans text-xs font-semibold" style="color:#2A8B8B;">粵語堂牧師</p>
+          </div>
+        </div>
+        <div class="pastor-card reveal border-l-2" style="border-color:#2A8B8B;">
+          <img src="brand-assets/staff/angus-ng.jpg" alt="吳顯添弟兄" />
+          <div class="p-4">
+            <h3 class="font-serif font-bold text-gray-900 text-base mb-0.5">吳顯添弟兄</h3>
+            <p class="text-gray-500 text-xs font-sans font-medium">事工同工</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CAMPUS SECTION
+  ══════════════════════════════════════ -->
+  <section class="py-24 bg-[#1a2832] relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 20% 60%, rgba(93,184,39,0.1) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(42,139,139,0.08) 0%, transparent 50%);"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-16 reveal">
+        <p class="section-label justify-center" style="color:rgba(93,184,39,0.8);">
+          <span style="background:rgba(93,184,39,0.8); width:20px; height:2px; display:inline-block; border-radius:1px;"></span>
+          分堂
+        </p>
+        <h2 class="font-serif font-black text-white text-4xl sm:text-5xl mt-2" style="letter-spacing: -0.03em;">我們的會區</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Pearland -->
+        <div class="rounded-2xl bg-white/6 border border-white/10 p-8 reveal-left hover:bg-white/10 transition-colors">
+          <div class="flex items-start gap-5">
+            <div class="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-7 h-7 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-serif font-bold text-white text-2xl mb-1">珍珠蘭堂</h3>
+              <p class="text-green-400 text-sm font-sans font-semibold mb-3">Pearland Campus</p>
+              <div class="flex items-center gap-3 mb-4">
+                <img src="brand-assets/staff/tsuan-ie-chu.jpg" alt="朱全業牧師" class="w-10 h-10 rounded-full object-cover object-top border-2 border-green-500/40" />
+                <div>
+                  <p class="text-white text-sm font-sans font-medium">朱全業牧師</p>
+                  <p class="text-gray-400 text-xs font-sans">分堂牧師 · 自 2017 年</p>
+                </div>
+              </div>
+              <p class="text-gray-400 font-sans text-sm" style="line-height: 1.8;">服侍珍珠蘭地區的弟兄姊妹，以福音建立多元族裔社區。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Richmond -->
+        <div class="rounded-2xl bg-white/6 border border-white/10 p-8 reveal-right hover:bg-white/10 transition-colors">
+          <div class="flex items-start gap-5">
+            <div class="w-14 h-14 rounded-2xl bg-teal-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-7 h-7 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-serif font-bold text-white text-2xl mb-1">列治文堂</h3>
+              <p class="text-teal-400 text-sm font-sans font-semibold mb-3">Richmond Campus</p>
+              <div class="flex items-center gap-3 mb-4">
+                <img src="brand-assets/staff/renshi-zhang.jpg" alt="張仁石傳道" class="w-10 h-10 rounded-full object-cover object-top border-2 border-teal-500/40" />
+                <div>
+                  <p class="text-white text-sm font-sans font-medium">張仁石傳道</p>
+                  <p class="text-gray-400 text-xs font-sans">分堂傳道</p>
+                </div>
+              </div>
+              <p class="text-gray-400 font-sans text-sm" style="line-height: 1.8;">在列治文地區建立教會，將福音帶入社區的每一個角落。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       MINISTRY GRID — staggered layout
+  ══════════════════════════════════════ -->
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="mb-16 reveal">
+        <p class="section-label">事工</p>
+        <h2 class="font-serif font-black text-gray-900 text-4xl sm:text-5xl mt-1" style="letter-spacing: -0.03em;">事工介紹</h2>
+        <p class="text-gray-500 mt-4 font-sans max-w-lg" style="line-height: 1.8;">我們提供多元化的事工，幫助每位弟兄姊妹在信仰旅途中成長服侍。</p>
+      </div>
+
+      <!-- Asymmetric grid: 2 large + 4 small -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Large: Youth — spans 2 rows on desktop -->
+        <div id="youth" class="ministry-tile reveal lg:row-span-2 bg-[#1a2832] min-h-[360px] lg:min-h-0 flex flex-col">
+          <div class="relative flex-1 overflow-hidden rounded-2xl">
+            <img src="brand-assets/staff/dick-lee.jpg" alt="青少年事工" class="absolute inset-0 w-full h-full object-cover object-top opacity-40" />
+            <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(26,40,50,1) 0%, rgba(26,40,50,0.3) 60%);"></div>
+            <div class="relative h-full flex flex-col justify-end p-8">
+              <span class="inline-flex items-center gap-2 text-green-400 text-xs font-sans font-bold tracking-widest uppercase mb-3">
+                <span class="w-4 h-px bg-green-400"></span> 青少年
+              </span>
+              <h3 class="font-serif font-black text-white text-3xl mb-3" style="letter-spacing: -0.02em;">青少年事工</h3>
+              <p class="text-gray-300 font-sans text-sm mb-6" style="line-height: 1.8;">
+                培育初中至高中學生在信仰上成長。每週六 6–8 PM 開放給 6–12 年級學生。主日另設中學生小組及高中生崇拜。
+              </p>
+              <div class="space-y-1 text-xs text-gray-400 font-sans mb-6">
+                <p>📅 週六 6:00–8:00 PM（6–12 年級）</p>
+                <p>📅 主日 9:30–10:45 AM（初中小組）</p>
+                <p>📅 主日 11:15–12:30 PM（高中崇拜）</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <img src="brand-assets/staff/dick-lee.jpg" alt="" class="w-8 h-8 rounded-full object-cover object-top border border-green-500/40" />
+                <div>
+                  <p class="text-white text-xs font-sans font-semibold">李迪克牧師</p>
+                  <p class="text-gray-400 text-xs font-sans">DLee@fbcchome.org</p>
+                </div>
+                <img src="brand-assets/staff/carolyn-lee.jpg" alt="" class="w-8 h-8 rounded-full object-cover object-top border border-green-500/40 -ml-3" />
+                <div>
+                  <p class="text-white text-xs font-sans font-semibold">李嘉琳主任</p>
+                  <p class="text-gray-400 text-xs font-sans">CarolynL@fbcchome.org</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Small: Children -->
+        <div id="children" class="ministry-tile reveal bg-green-50 border border-green-100 rounded-2xl p-7">
+          <div class="w-11 h-11 rounded-xl bg-green-100 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <h3 class="font-serif font-bold text-gray-900 text-xl mb-2">兒童事工</h3>
+          <p class="text-gray-600 font-sans text-sm" style="line-height: 1.8;">以兒童為中心的主日崇拜及 AWANA 課程，引導孩子認識神、愛神愛人。提供國語、粵語、英語三語環境。</p>
+        </div>
+
+        <!-- Small: Adult Education -->
+        <div id="adult" class="ministry-tile reveal bg-teal-50 border border-teal-100 rounded-2xl p-7">
+          <div class="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          </div>
+          <h3 class="font-serif font-bold text-gray-900 text-xl mb-2">成人教育</h3>
+          <p class="text-gray-600 font-sans text-sm" style="line-height: 1.8;">主日學、查經小組、婦女查經，以及線上聖經閱讀部落格，裝備弟兄姊妹在信仰上扎根。</p>
+        </div>
+
+        <!-- Small: Prayer -->
+        <div id="prayer" class="ministry-tile reveal bg-gray-50 border border-gray-100 rounded-2xl p-7">
+          <div class="w-11 h-11 rounded-xl bg-gray-100 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+          </div>
+          <h3 class="font-serif font-bold text-gray-900 text-xl mb-2">禱告中心</h3>
+          <p class="text-gray-600 font-sans text-sm" style="line-height: 1.8;">持守代禱異象，為教會、社區及宣教士守望。歡迎提交代禱事項，讓我們一同禱告。</p>
+        </div>
+
+        <!-- Small: Women -->
+        <div class="ministry-tile reveal bg-rose-50 border border-rose-100 rounded-2xl p-7">
+          <div class="w-11 h-11 rounded-xl bg-rose-100 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="font-serif font-bold text-gray-900 text-xl mb-2">婦女事工</h3>
+          <p class="text-gray-600 font-sans text-sm" style="line-height: 1.8;">為姊妹提供靈修、查經、退修及互助的平台，彼此扶持，在神恩典中成長。</p>
+        </div>
+
+      </div>
+
+      <!-- Extra programs row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div class="reveal rounded-xl bg-green-500 p-5 text-center hover:bg-green-600 transition-colors cursor-default">
+          <p class="font-serif font-black text-white text-lg mb-1">中文學校</p>
+          <p class="text-green-100 text-xs font-sans">中文語言教育</p>
+        </div>
+        <div class="reveal rounded-xl bg-[#1a2832] p-5 text-center hover:bg-[#243644] transition-colors cursor-default">
+          <p class="font-serif font-black text-white text-lg mb-1">宣教事工</p>
+          <p class="text-gray-400 text-xs font-sans">本地及跨國宣教</p>
+        </div>
+        <div class="reveal rounded-xl bg-teal-500 p-5 text-center hover:bg-teal-600 transition-colors cursor-default">
+          <p class="font-serif font-black text-white text-lg mb-1">關懷中心</p>
+          <p class="text-teal-100 text-xs font-sans">長者及特需關懷</p>
+        </div>
+        <div class="reveal rounded-xl bg-gray-800 p-5 text-center hover:bg-gray-700 transition-colors cursor-default">
+          <p class="font-serif font-black text-white text-lg mb-1">FB4C 輔導</p>
+          <p class="text-gray-400 text-xs font-sans">專業心理輔導</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SENIOR CENTER HIGHLIGHT
+  ══════════════════════════════════════ -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-1/2 reveal-left">
+          <p class="section-label">長者關懷</p>
+          <h2 class="font-serif font-black text-gray-900 text-3xl sm:text-4xl mt-2 mb-5" style="letter-spacing: -0.03em;">長青中心</h2>
+          <p class="text-gray-600 font-sans mb-6" style="line-height: 1.9;">
+            長青中心為年長弟兄姊妹提供一個充滿愛與關懷的社區。我們舉辦定期聚會、健康活動，並以中文（國語及粵語）服侍，讓長者在信仰群體中找到歸屬感。
+          </p>
+          <div class="flex items-center gap-4">
+            <img src="brand-assets/staff/li-ming-hwang.jpg" alt="黃莉明主任" class="w-14 h-14 rounded-2xl object-cover object-top border-2 border-green-100" />
+            <div>
+              <p class="font-serif font-bold text-gray-900">黃莉明主任</p>
+              <p class="text-green-600 text-sm font-sans">長青中心主任</p>
+              <p class="text-gray-400 text-xs font-sans">LimingH@fbcchome.org</p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:w-1/2 reveal-right">
+          <div class="rounded-3xl overflow-hidden" style="box-shadow: 0 8px 40px rgba(0,0,0,0.1);">
+            <img src="https://placehold.co/640x400/f2fae8/5DB827?text=Senior+Center" alt="長青中心" class="w-full h-72 object-cover" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CONNECT / CTA
+  ══════════════════════════════════════ -->
+  <section id="contact" class="py-24 bg-[#1a2832] relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 100%, rgba(93,184,39,0.12) 0%, transparent 60%);"></div>
+    <svg class="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" xmlns="http://www.w3.org/2000/svg"><filter id="n3"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n3)"/></svg>
+
+    <div class="relative max-w-3xl mx-auto px-4 text-center reveal">
+      <p class="section-label justify-center" style="color: rgba(93,184,39,0.8);">
+        <span style="background: rgba(93,184,39,0.8); width:20px; height:2px; display:inline-block; border-radius:1px;"></span>
+        歡迎加入
+      </p>
+      <h2 class="font-serif font-black text-white text-4xl sm:text-5xl mt-3 mb-4" style="letter-spacing: -0.03em;">
+        我們期待與你相遇
+      </h2>
+      <p class="font-serif text-gray-400 text-lg italic mb-2" style="line-height: 1.8;">「你們是世上的光……」</p>
+      <p class="text-gray-500 font-sans text-sm mb-10" style="line-height: 1.8;">
+        無論你是第一次來教會，或正在尋找信仰群體，我們都歡迎你來到中文堂與我們同行。
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+        <a href="#services" class="btn-primary font-sans">查看聚會時間</a>
+        <a href="mailto:secretary@fbcchome.org" class="btn-outline-white font-sans">寫信給我們</a>
+      </div>
+
+      <!-- Contact info cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+        <div class="rounded-xl bg-white/6 border border-white/10 p-5">
+          <p class="text-green-400 text-xs font-sans font-bold tracking-widest uppercase mb-2">地址</p>
+          <p class="text-white font-sans text-sm" style="line-height:1.7;">7707 Hwy 6<br />Missouri City, TX 77459</p>
+        </div>
+        <div class="rounded-xl bg-white/6 border border-white/10 p-5">
+          <p class="text-green-400 text-xs font-sans font-bold tracking-widest uppercase mb-2">電話</p>
+          <p class="text-white font-sans text-sm">(281) 499-2131</p>
+          <p class="text-gray-400 font-sans text-xs mt-1">週一至週五 9AM–5PM</p>
+        </div>
+        <div class="rounded-xl bg-white/6 border border-white/10 p-5">
+          <p class="text-green-400 text-xs font-sans font-bold tracking-widest uppercase mb-2">電郵</p>
+          <p class="text-white font-sans text-sm">secretary@fbcchome.org</p>
+          <p class="text-gray-400 font-sans text-xs mt-1">一般查詢請電郵聯繫</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="bg-gray-900 text-gray-400 py-16 font-sans">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="md:col-span-2">
+          <img src="brand-assets/fbcc-web-logo1-244x81.png" alt="Fort Bend Community Church" class="h-10 w-auto mb-4 brightness-200 opacity-90" />
+          <p class="text-sm" style="line-height: 1.8; max-width: 300px;">追求神的心意，使萬民成為基督的門徒——在密蘇里城、珍珠蘭及列治文三個會區服侍。</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4 text-sm tracking-wide uppercase">中文堂</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#mandarin" class="hover:text-green-400 transition-colors">國語堂</a></li>
+            <li><a href="#cantonese" class="hover:text-green-400 transition-colors">粵語堂</a></li>
+            <li><a href="#youth" class="hover:text-green-400 transition-colors">青少年事工</a></li>
+            <li><a href="#children" class="hover:text-green-400 transition-colors">兒童事工</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4 text-sm tracking-wide uppercase">語言</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-green-400 transition-colors">English</a></li>
+            <li><a href="chinese.html" class="text-green-400">中文堂</a></li>
+          </ul>
+          <h4 class="text-white font-semibold mt-6 mb-4 text-sm tracking-wide uppercase">連結</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html#give" class="hover:text-green-400 transition-colors">線上奉獻</a></li>
+            <li><a href="staff.html" class="hover:text-green-400 transition-colors">同工團隊</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-sm text-center">
+        &copy; 2025 Fort Bend Community Church. 版權所有。
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const toggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    toggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      iconOpen.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+    });
+
+    // Scroll reveal
+    const allReveal = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    allReveal.forEach(el => revealObs.observe(el));
+  </script>
+</body>
+</html>
