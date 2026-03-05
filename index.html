@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fort Bend Community Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            green: {
+              50: '#f2fae8',
+              100: '#e0f4c8',
+              200: '#c3e99a',
+              300: '#9dd864',
+              400: '#79c538',
+              500: '#5DB827',
+              600: '#4a961e',
+              700: '#3a751a',
+              800: '#2e5c18',
+              900: '#264d17',
+            },
+            teal: {
+              50: '#f0fafa',
+              100: '#d8f2f2',
+              200: '#b1e5e5',
+              300: '#7ed0d0',
+              400: '#4bb4b4',
+              500: '#2A8B8B',
+              600: '#237474',
+              700: '#1d5d5d',
+              800: '#184d4d',
+              900: '#154040',
+            },
+          },
+          fontFamily: {
+            serif: ['Merriweather', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* SVG Grain filter */
+    .grain::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Nav link hover */
+    .nav-link {
+      position: relative;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: color 200ms cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #5DB827;
+      transition: width 250ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .nav-link:hover { color: #5DB827; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid #5DB827; outline-offset: 4px; border-radius: 2px; }
+
+    /* Card hover */
+    .card-hover {
+      transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 300ms cubic-bezier(0.4,0,0.2,1);
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(93,184,39,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Button states */
+    .btn-primary {
+      background: #5DB827;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      font-size: 0.9375rem;
+      letter-spacing: 0.01em;
+      transition: transform 150ms cubic-bezier(0.34,1.56,0.64,1), background 150ms ease, box-shadow 150ms ease;
+      box-shadow: 0 2px 8px rgba(93,184,39,0.3), 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .btn-primary:hover { background: #4a961e; box-shadow: 0 4px 16px rgba(93,184,39,0.4); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(93,184,39,0.3); }
+    .btn-primary:focus-visible { outline: 2px solid #5DB827; outline-offset: 3px; }
+
+    .btn-outline {
+      border: 2px solid white;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      font-size: 0.9375rem;
+      transition: background 150ms ease, transform 150ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+
+    /* Dropdown */
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) scaleY(0.95);
+      transform-origin: top center;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+      padding: 0.5rem;
+      min-width: 180px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 50;
+    }
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) scaleY(1);
+    }
+    .dropdown-item {
+      display: block;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+      font-weight: 500;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .dropdown-item:hover { background: #f2fae8; color: #5DB827; }
+
+    /* Ministry icon background */
+    .ministry-card {
+      background: white;
+      border-radius: 1.25rem;
+      border: 1px solid rgba(93,184,39,0.1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(93,184,39,0.06);
+      overflow: hidden;
+      transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 300ms ease;
+    }
+    .ministry-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 40px rgba(93,184,39,0.18), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Hero gradient */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(93,184,39,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(42,139,139,0.15) 0%, transparent 60%),
+        linear-gradient(135deg, #1a2832 0%, #1e3a2a 50%, #1a3232 100%);
+    }
+
+    /* Section label */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5DB827;
+      margin-bottom: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #5DB827;
+      border-radius: 1px;
+    }
+
+    /* Service time card */
+    .time-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.75rem;
+      border: 1px solid rgba(93,184,39,0.12);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(93,184,39,0.07);
+      transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 250ms ease;
+    }
+    .time-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(93,184,39,0.14), 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms ease, transform 600ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile menu */
+    #mobile-menu {
+      transition: max-height 350ms cubic-bezier(0.4,0,0.2,1), opacity 250ms ease;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+    }
+    #mobile-menu.open {
+      max-height: 600px;
+      opacity: 1;
+    }
+
+    /* Sticky nav background */
+    #navbar {
+      transition: background 300ms ease, box-shadow 300ms ease;
+    }
+    #navbar.scrolled {
+      background: rgba(255,255,255,0.97) !important;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+    }
+    #navbar.scrolled .nav-link { color: #374151 !important; }
+    #navbar.scrolled .logo-text { color: #1a2832; }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-800 antialiased">
+
+  <!-- NAVBAR -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-transparent" role="navigation" aria-label="Main navigation">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="#" class="flex-shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-500 rounded" aria-label="Fort Bend Community Church home">
+          <img src="brand-assets/fbcc-web-logo1-244x81.png" alt="Fort Bend Community Church" class="h-10 w-auto" />
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-6">
+          <a href="#about" class="nav-link">About</a>
+
+          <div class="dropdown">
+            <button class="nav-link flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-500 rounded" aria-haspopup="true">
+              Ministries
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="#ministries" class="dropdown-item">All Ministries</a>
+              <a href="#ministries" class="dropdown-item">Small Groups</a>
+              <a href="#ministries" class="dropdown-item">Children</a>
+              <a href="#ministries" class="dropdown-item">Youth</a>
+              <a href="#ministries" class="dropdown-item">Women</a>
+              <a href="#ministries" class="dropdown-item">Missions</a>
+            </div>
+          </div>
+
+          <a href="#sermons" class="nav-link">Sermons</a>
+          <a href="#events" class="nav-link">Events</a>
+
+          <div class="dropdown">
+            <button class="nav-link flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-500 rounded" aria-haspopup="true">
+              Campuses
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Missouri City</a>
+              <a href="#" class="dropdown-item">Pearland Campus</a>
+              <a href="#" class="dropdown-item">Richmond Campus</a>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button class="nav-link flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-500 rounded" aria-haspopup="true">
+              语言
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">English</a>
+              <a href="#" class="dropdown-item">國語 (Mandarin)</a>
+              <a href="#" class="dropdown-item">粵語 (Cantonese)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="hidden lg:flex items-center gap-3">
+          <a href="#give" class="btn-primary text-sm py-2 px-5 inline-block">Give Online</a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button id="menu-toggle" class="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 transition-colors" aria-label="Toggle menu" aria-expanded="false">
+          <svg id="menu-icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+        <a href="#about" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">About</a>
+        <a href="#ministries" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">Ministries</a>
+        <a href="#sermons" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">Sermons</a>
+        <a href="#events" class="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-green-50 hover:text-green-600 transition-colors">Events</a>
+        <div class="border-t border-gray-100 my-2 pt-3">
+          <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Campuses</p>
+          <a href="#" class="px-4 py-2 block text-gray-600 hover:text-green-600 transition-colors">Missouri City</a>
+          <a href="#" class="px-4 py-2 block text-gray-600 hover:text-green-600 transition-colors">Pearland Campus</a>
+          <a href="#" class="px-4 py-2 block text-gray-600 hover:text-green-600 transition-colors">Richmond Campus</a>
+        </div>
+        <div class="pt-2">
+          <a href="#give" class="btn-primary text-center block">Give Online</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative min-h-screen flex items-center grain overflow-hidden" style="background: #1a2832;" aria-label="Hero">
+    <!-- YouTube background video -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <iframe
+        src="https://www.youtube.com/embed/T-h__sLdEOM?autoplay=1&mute=1&loop=1&playlist=T-h__sLdEOM&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&modestbranding=1&iv_load_policy=3"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        aria-hidden="true"
+        style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:177.78vh; height:100vh; min-width:100%; min-height:56.25vw; pointer-events:none;"
+      ></iframe>
+    </div>
+    <!-- Dark overlay to keep text readable -->
+    <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(135deg, rgba(26,40,50,0.82) 0%, rgba(26,50,40,0.72) 50%, rgba(26,50,50,0.78) 100%);"></div>
+    <!-- Subtle green tint layer -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(93,184,39,0.10) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 20% 80%, rgba(42,139,139,0.08) 0%, transparent 60%);"></div>
+    <!-- Decorative circles -->
+    <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full border border-green-500/10 pointer-events-none"></div>
+    <div class="absolute top-1/3 right-1/3 w-64 h-64 rounded-full border border-teal-500/10 pointer-events-none"></div>
+    <div class="absolute bottom-16 left-16 w-48 h-48 rounded-full bg-green-500/5 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40 grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Text -->
+      <div>
+        <p class="section-label !text-green-400 !before:bg-green-400 mb-4">Welcome to FBCC</p>
+        <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight" style="letter-spacing: -0.03em; line-height: 1.05;">
+          A Community<br />
+          <span class="text-green-400">Rooted in</span><br />
+          God's Love
+        </h1>
+        <p class="mt-6 text-lg text-gray-300 leading-relaxed max-w-md" style="line-height: 1.7;">
+          Fort Bend Community Church is a multigenerational, multilingual family of believers in Missouri City, TX — loving God, loving people, serving the world.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#about" class="btn-primary">Plan Your Visit</a>
+          <a href="#sermons" class="btn-outline">Watch Sermons</a>
+        </div>
+        <!-- Stats -->
+        <div class="mt-12 flex gap-10">
+          <div>
+            <p class="text-3xl font-serif font-black text-white" style="letter-spacing: -0.02em;">3</p>
+            <p class="text-sm text-gray-400 mt-0.5">Campuses</p>
+          </div>
+          <div class="border-l border-white/10 pl-10">
+            <p class="text-3xl font-serif font-black text-white" style="letter-spacing: -0.02em;">3</p>
+            <p class="text-sm text-gray-400 mt-0.5">Languages</p>
+          </div>
+          <div class="border-l border-white/10 pl-10">
+            <p class="text-3xl font-serif font-black text-white" style="letter-spacing: -0.02em;">10+</p>
+            <p class="text-sm text-gray-400 mt-0.5">Ministries</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero image card -->
+      <div class="hidden lg:block relative">
+        <div class="relative rounded-2xl overflow-hidden aspect-[4/3]" style="box-shadow: 0 24px 64px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2);">
+          <img src="https://placehold.co/640x480/2A8B8B/ffffff?text=Worship+Service" alt="FBCC worship service" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          <div class="absolute inset-0" style="background: rgba(93,184,39,0.12); mix-blend-mode: multiply;"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <p class="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Sunday Worship</p>
+            <p class="text-white font-serif text-xl font-bold">11:15 AM · Sundays</p>
+          </div>
+        </div>
+        <!-- Floating card -->
+        <div class="absolute -bottom-8 -left-8 bg-white rounded-xl p-4 shadow-xl flex items-center gap-3" style="box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(93,184,39,0.1);">
+          <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500 font-medium">Missouri City, TX</p>
+            <p class="text-sm text-gray-800 font-semibold">7707 Hwy 6</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+      <span class="text-xs font-medium tracking-widest uppercase">Scroll</span>
+      <div class="w-px h-12 bg-gradient-to-b from-white/30 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- SERVICE TIMES -->
+  <section id="services" class="py-20 bg-gray-50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 reveal">
+        <p class="section-label justify-center">Join Us</p>
+        <h2 class="font-serif text-4xl font-bold text-gray-900 mt-2" style="letter-spacing: -0.025em;">Service Times</h2>
+        <p class="text-gray-500 mt-3 max-w-xl mx-auto" style="line-height: 1.7;">We gather every Sunday to worship, grow, and connect. All are welcome.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+        <!-- English -->
+        <div class="time-card">
+          <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <p class="text-xs font-bold text-green-600 uppercase tracking-wider mb-1">English</p>
+          <h3 class="font-serif text-xl font-bold text-gray-900 mb-3">Adult & High School</h3>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-sm font-medium">11:15 AM · Sundays</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-teal-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              <span class="text-sm text-gray-500">Building 1 Gym</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle School -->
+        <div class="time-card">
+          <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <p class="text-xs font-bold text-teal-600 uppercase tracking-wider mb-1">Youth</p>
+          <h3 class="font-serif text-xl font-bold text-gray-900 mb-3">Middle School</h3>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-sm font-medium">11:15 AM · Sundays</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-teal-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              <span class="text-sm text-gray-500">Youth Center</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Children -->
+        <div class="time-card">
+          <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <p class="text-xs font-bold text-green-600 uppercase tracking-wider mb-1">Children</p>
+          <h3 class="font-serif text-xl font-bold text-gray-900 mb-3">Sunday Worship</h3>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-sm font-medium">9:30 AM · Sundays</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-teal-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              <span class="text-sm text-gray-500">Building 3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Campus links -->
+      <div class="mt-10 text-center reveal">
+        <p class="text-sm text-gray-500 mb-4">Also meeting at</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 text-sm font-medium text-gray-600 hover:border-green-400 hover:text-green-600 hover:bg-green-50 transition-colors focus-visible:outline-2 focus-visible:outline-green-500">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+            Pearland Campus
+          </a>
+          <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 text-sm font-medium text-gray-600 hover:border-green-400 hover:text-green-600 hover:bg-green-50 transition-colors focus-visible:outline-2 focus-visible:outline-green-500">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+            Richmond Campus
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST SERMON -->
+  <section id="sermons" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 reveal">
+        <div>
+          <p class="section-label">Latest Teaching</p>
+          <h2 class="font-serif text-4xl font-bold text-gray-900 mt-1" style="letter-spacing: -0.025em;">Recent Sermons</h2>
+        </div>
+        <a href="#" class="mt-4 sm:mt-0 inline-flex items-center gap-2 text-green-600 font-semibold text-sm hover:text-green-700 transition-colors focus-visible:outline-2 focus-visible:outline-green-500 rounded">
+          All sermons
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        <!-- Featured sermon -->
+        <div class="lg:col-span-2 reveal">
+          <div class="relative rounded-2xl overflow-hidden group cursor-pointer" style="box-shadow: 0 4px 24px rgba(0,0,0,0.1);">
+            <img src="https://placehold.co/800x450/2A8B8B/ffffff?text=Walking+in+Faith" alt="Latest sermon" class="w-full h-64 lg:h-80 object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <button class="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center hover:bg-white hover:scale-110 transition-transform duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-95" style="box-shadow: 0 4px 20px rgba(0,0,0,0.3);" aria-label="Play sermon">
+                <svg class="w-7 h-7 text-green-600 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 p-6">
+              <p class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2">This Week</p>
+              <h3 class="font-serif text-2xl font-bold text-white mb-1" style="letter-spacing: -0.02em;">"Walking in Faith"</h3>
+              <p class="text-gray-300 text-sm">Pastor Dick Lee · Hebrews 11:1-6</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent sermons list -->
+        <div class="flex flex-col gap-4 reveal">
+          <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Previous</h3>
+          <a href="#" class="flex gap-4 items-center p-3 rounded-xl hover:bg-gray-50 transition-colors group focus-visible:outline-2 focus-visible:outline-green-500">
+            <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="https://placehold.co/64x64/2A8B8B/ffffff?text=S" alt="The Power of Prayer" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" />
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-gray-800 group-hover:text-green-600 transition-colors line-clamp-2">The Power of Prayer</p>
+              <p class="text-xs text-gray-500 mt-0.5">Pastor Brian Lam</p>
+              <p class="text-xs text-teal-600 font-medium mt-0.5">James 5:13-18</p>
+            </div>
+          </a>
+          <a href="#" class="flex gap-4 items-center p-3 rounded-xl hover:bg-gray-50 transition-colors group focus-visible:outline-2 focus-visible:outline-green-500">
+            <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="https://placehold.co/64x64/5DB827/ffffff?text=S" alt="Community and Belonging" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" />
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-gray-800 group-hover:text-green-600 transition-colors line-clamp-2">Community &amp; Belonging</p>
+              <p class="text-xs text-gray-500 mt-0.5">Pastor Sam Kwan</p>
+              <p class="text-xs text-teal-600 font-medium mt-0.5">Acts 2:42-47</p>
+            </div>
+          </a>
+          <a href="#" class="flex gap-4 items-center p-3 rounded-xl hover:bg-gray-50 transition-colors group focus-visible:outline-2 focus-visible:outline-green-500">
+            <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="https://placehold.co/64x64/4a961e/ffffff?text=S" alt="Rooted in His Word" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" />
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-gray-800 group-hover:text-green-600 transition-colors line-clamp-2">Rooted in His Word</p>
+              <p class="text-xs text-gray-500 mt-0.5">Pastor Dick Lee</p>
+              <p class="text-xs text-teal-600 font-medium mt-0.5">Psalm 1</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINISTRIES -->
+  <section id="ministries" class="py-20" style="background: linear-gradient(180deg, #f8faf5 0%, #ffffff 100%);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <p class="section-label justify-center">Get Involved</p>
+        <h2 class="font-serif text-4xl font-bold text-gray-900 mt-1" style="letter-spacing: -0.025em;">Ministries for Everyone</h2>
+        <p class="text-gray-500 mt-3 max-w-xl mx-auto" style="line-height: 1.7;">From children to seniors, small groups to missions — there is a place for you at FBCC.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Small Groups -->
+        <div class="ministry-card reveal">
+          <div class="h-36 overflow-hidden relative">
+            <img src="https://placehold.co/400x144/5DB827/ffffff?text=Small+Groups" alt="Small Groups" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute inset-0" style="background: rgba(93,184,39,0.2); mix-blend-mode: multiply;"></div>
+          </div>
+          <div class="p-5">
+            <div class="w-10 h-10 -mt-9 rounded-xl bg-green-500 flex items-center justify-center mb-3 relative z-10 shadow-md">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-gray-900 mb-2">Small Groups</h3>
+            <p class="text-sm text-gray-500 leading-relaxed" style="line-height: 1.6;">Groups of 6–10 meeting regularly to grow together in faith across all life stages.</p>
+            <a href="#" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-green-600 hover:text-green-700 transition-colors focus-visible:outline-2 focus-visible:outline-green-500 rounded">
+              Learn more <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Children -->
+        <div class="ministry-card reveal" style="transition-delay: 80ms;">
+          <div class="h-36 overflow-hidden relative">
+            <img src="https://placehold.co/400x144/2A8B8B/ffffff?text=Children" alt="Children's Ministry" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute inset-0" style="background: rgba(42,139,139,0.2); mix-blend-mode: multiply;"></div>
+          </div>
+          <div class="p-5">
+            <div class="w-10 h-10 -mt-9 rounded-xl bg-teal-500 flex items-center justify-center mb-3 relative z-10 shadow-md">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-gray-900 mb-2">Children</h3>
+            <p class="text-sm text-gray-500 leading-relaxed" style="line-height: 1.6;">Loving, valuing, and guiding children in God's Word through engaging Sunday worship.</p>
+            <a href="#" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-teal-600 hover:text-teal-700 transition-colors focus-visible:outline-2 focus-visible:outline-teal-500 rounded">
+              Learn more <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Youth -->
+        <div class="ministry-card reveal" style="transition-delay: 160ms;">
+          <div class="h-36 overflow-hidden relative">
+            <img src="https://placehold.co/400x144/4a961e/ffffff?text=Youth" alt="Youth Ministry" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute inset-0" style="background: rgba(74,150,30,0.2); mix-blend-mode: multiply;"></div>
+          </div>
+          <div class="p-5">
+            <div class="w-10 h-10 -mt-9 rounded-xl bg-green-700 flex items-center justify-center mb-3 relative z-10 shadow-md">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-gray-900 mb-2">Youth</h3>
+            <p class="text-sm text-gray-500 leading-relaxed" style="line-height: 1.6;">Reaching students with God's love — Focused, Involved, Rooted, Excited, Dedicated (FIRED).</p>
+            <a href="#" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-green-700 hover:text-green-800 transition-colors focus-visible:outline-2 focus-visible:outline-green-500 rounded">
+              Learn more <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Women -->
+        <div class="ministry-card reveal" style="transition-delay: 240ms;">
+          <div class="h-36 overflow-hidden relative">
+            <img src="https://placehold.co/400x144/1d5d5d/ffffff?text=Women" alt="Women's Ministry" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute inset-0" style="background: rgba(29,93,93,0.2); mix-blend-mode: multiply;"></div>
+          </div>
+          <div class="p-5">
+            <div class="w-10 h-10 -mt-9 rounded-xl bg-teal-700 flex items-center justify-center mb-3 relative z-10 shadow-md">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-gray-900 mb-2">Women's Ministry</h3>
+            <p class="text-sm text-gray-500 leading-relaxed" style="line-height: 1.6;">Bible study, prayer, community, and outreach for women of all ages and backgrounds.</p>
+            <a href="#" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-teal-700 hover:text-teal-800 transition-colors focus-visible:outline-2 focus-visible:outline-teal-500 rounded">
+              Learn more <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- More ministries row -->
+      <div class="mt-8 grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-3 reveal">
+        <a href="#" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-colors text-center group focus-visible:outline-2 focus-visible:outline-green-500">
+          <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-green-100 flex items-center justify-center text-gray-400 group-hover:text-green-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-gray-600 group-hover:text-green-700 transition-colors">Missions</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-colors text-center group focus-visible:outline-2 focus-visible:outline-green-500">
+          <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-green-100 flex items-center justify-center text-gray-400 group-hover:text-green-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-gray-600 group-hover:text-green-700 transition-colors">M68</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-colors text-center group focus-visible:outline-2 focus-visible:outline-green-500">
+          <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-green-100 flex items-center justify-center text-gray-400 group-hover:text-green-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-gray-600 group-hover:text-green-700 transition-colors">Counseling</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-colors text-center group focus-visible:outline-2 focus-visible:outline-green-500">
+          <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-green-100 flex items-center justify-center text-gray-400 group-hover:text-green-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-gray-600 group-hover:text-green-700 transition-colors">Prayer Center</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-colors text-center group focus-visible:outline-2 focus-visible:outline-green-500">
+          <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-green-100 flex items-center justify-center text-gray-400 group-hover:text-green-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-gray-600 group-hover:text-green-700 transition-colors">Sports</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-colors text-center group focus-visible:outline-2 focus-visible:outline-green-500">
+          <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-green-100 flex items-center justify-center text-gray-400 group-hover:text-green-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-gray-600 group-hover:text-green-700 transition-colors">Chinese School</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 reveal">
+        <div>
+          <p class="section-label">Calendar</p>
+          <h2 class="font-serif text-4xl font-bold text-gray-900 mt-1" style="letter-spacing: -0.025em;">Upcoming Events</h2>
+        </div>
+        <a href="#" class="mt-4 sm:mt-0 inline-flex items-center gap-2 text-green-600 font-semibold text-sm hover:text-green-700 transition-colors focus-visible:outline-2 focus-visible:outline-green-500 rounded">
+          Full calendar
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Event cards -->
+        <div class="card-hover rounded-2xl overflow-hidden border border-gray-100 reveal" style="box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);">
+          <div class="relative h-40 overflow-hidden">
+            <img src="https://placehold.co/400x160/5DB827/ffffff?text=AWANA+Club" alt="AWANA Club" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute inset-0" style="background: rgba(93,184,39,0.15); mix-blend-mode: multiply;"></div>
+            <span class="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Children</span>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="flex items-center justify-center w-12 text-center bg-green-50 rounded-lg py-1">
+                <div>
+                  <p class="text-xs font-bold text-green-600 uppercase">Mar</p>
+                  <p class="text-xl font-black text-gray-900 leading-tight">15</p>
+                </div>
+              </div>
+              <div class="text-sm text-gray-500">
+                <p class="font-medium text-gray-700">Saturday</p>
+                <p>9:00 AM – 12:00 PM</p>
+              </div>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-gray-900 mb-1">AWANA 2025–2026</h3>
+            <p class="text-sm text-gray-500 line-clamp-2" style="line-height: 1.6;">Annual AWANA club kickoff for children to learn, grow, and have fun in God's Word.</p>
+          </div>
+        </div>
+
+        <div class="card-hover rounded-2xl overflow-hidden border border-gray-100 reveal" style="transition-delay: 80ms; box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);">
+          <div class="relative h-40 overflow-hidden">
+            <img src="https://placehold.co/400x160/2A8B8B/ffffff?text=Small+Group+Fair" alt="Small Group Fair" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute inset-0" style="background: rgba(42,139,139,0.15); mix-blend-mode: multiply;"></div>
+            <span class="absolute top-3 left-3 bg-teal-500 text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Community</span>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="flex items-center justify-center w-12 text-center bg-teal-50 rounded-lg py-1">
+                <div>
+                  <p class="text-xs font-bold text-teal-600 uppercase">Mar</p>
+                  <p class="text-xl font-black text-gray-900 leading-tight">22</p>
+                </div>
+              </div>
+              <div class="text-sm text-gray-500">
+                <p class="font-medium text-gray-700">Sunday</p>
+                <p>After service</p>
+              </div>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-gray-900 mb-1">Small Group Fair</h3>
+            <p class="text-sm text-gray-500 line-clamp-2" style="line-height: 1.6;">Find your community! Browse and sign up for the small group that fits your life stage.</p>
+          </div>
+        </div>
+
+        <div class="card-hover rounded-2xl overflow-hidden border border-gray-100 reveal" style="transition-delay: 160ms; box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);">
+          <div class="relative h-40 overflow-hidden">
+            <img src="https://placehold.co/400x160/3a751a/ffffff?text=Women%27s+Retreat" alt="Women's Retreat" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute inset-0" style="background: rgba(58,117,26,0.15); mix-blend-mode: multiply;"></div>
+            <span class="absolute top-3 left-3 bg-green-700 text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Women</span>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="flex items-center justify-center w-12 text-center bg-green-50 rounded-lg py-1">
+                <div>
+                  <p class="text-xs font-bold text-green-700 uppercase">Apr</p>
+                  <p class="text-xl font-black text-gray-900 leading-tight">5</p>
+                </div>
+              </div>
+              <div class="text-sm text-gray-500">
+                <p class="font-medium text-gray-700">Friday–Sunday</p>
+                <p>All weekend</p>
+              </div>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-gray-900 mb-1">Women's Retreat 2026</h3>
+            <p class="text-sm text-gray-500 line-clamp-2" style="line-height: 1.6;">A weekend of rest, renewal, and connection with God and other women of FBCC.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / LEADERSHIP -->
+  <section id="about" class="py-20 relative overflow-hidden" style="background: linear-gradient(135deg, #1a2832 0%, #1e3a2a 60%, #1a3232 100%);">
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(93,184,39,0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 10% 80%, rgba(42,139,139,0.1) 0%, transparent 50%);"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Text -->
+        <div class="reveal">
+          <p class="section-label !text-green-400">Our Story</p>
+          <h2 class="font-serif text-4xl lg:text-5xl font-black text-white mt-2 mb-6" style="letter-spacing: -0.03em; line-height: 1.1;">Serving the Fort Bend Community Since Day One</h2>
+          <p class="text-gray-300 mb-4" style="line-height: 1.7;">
+            Fort Bend Community Church began with a vision to build a church that reflects the diversity and warmth of our community — a place where people from all backgrounds can encounter the living God.
+          </p>
+          <p class="text-gray-400 mb-8" style="line-height: 1.7;">
+            Today we gather across three campuses in Missouri City, Pearland, and Richmond, worshipping in English, Mandarin, and Cantonese. Our heart is to love God, love people, and serve our city.
+          </p>
+          <div class="flex gap-8 mb-8 py-6 border-t border-white/10">
+            <div>
+              <p class="font-serif text-3xl font-black text-green-400">3</p>
+              <p class="text-gray-400 text-sm mt-1">Campuses</p>
+            </div>
+            <div>
+              <p class="font-serif text-3xl font-black text-green-400">3</p>
+              <p class="text-gray-400 text-sm mt-1">Languages</p>
+            </div>
+            <div>
+              <p class="font-serif text-3xl font-black text-green-400">10+</p>
+              <p class="text-gray-400 text-sm mt-1">Ministries</p>
+            </div>
+          </div>
+          <a href="#" class="btn-primary inline-block">Learn Our History</a>
+        </div>
+
+        <!-- Leadership cards -->
+        <div class="grid grid-cols-2 gap-4 reveal">
+          <div class="rounded-2xl overflow-hidden group" style="box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div class="relative">
+              <img src="https://placehold.co/280x320/2A8B8B/ffffff?text=Pastor+Brian" alt="Pastor Brian Lam" class="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute bottom-0 p-4">
+                <p class="text-white font-serif font-bold text-sm">Pastor Brian Lam</p>
+                <p class="text-green-400 text-xs">Senior Pastor</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-2xl overflow-hidden group mt-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div class="relative">
+              <img src="https://placehold.co/280x320/5DB827/ffffff?text=Pastor+Dick" alt="Pastor Dick Lee" class="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute bottom-0 p-4">
+                <p class="text-white font-serif font-bold text-sm">Pastor Dick Lee</p>
+                <p class="text-green-400 text-xs">English Pastor</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-2xl overflow-hidden group -mt-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div class="relative">
+              <img src="https://placehold.co/280x320/1d5d5d/ffffff?text=Pastor+Sam" alt="Pastor Sam Kwan" class="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute bottom-0 p-4">
+                <p class="text-white font-serif font-bold text-sm">Pastor Sam Kwan</p>
+                <p class="text-green-400 text-xs">Executive Pastor</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-2xl overflow-hidden group" style="box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div class="relative">
+              <img src="https://placehold.co/280x320/4a961e/ffffff?text=Pastor+Jeremy" alt="Pastor Jeremy Chu" class="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute bottom-0 p-4">
+                <p class="text-white font-serif font-bold text-sm">Pastor Jeremy Chu</p>
+                <p class="text-green-400 text-xs">Youth Pastor</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIVE CTA -->
+  <section id="give" class="py-20 bg-green-50 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-green-100 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-teal-50 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
+      <p class="section-label justify-center">Generosity</p>
+      <h2 class="font-serif text-4xl font-bold text-gray-900 mt-1 mb-4" style="letter-spacing: -0.025em;">Give to Support Our Mission</h2>
+      <p class="text-gray-600 mb-8 max-w-lg mx-auto" style="line-height: 1.7;">
+        Your generosity helps us love our community, support missions, and build God's kingdom in Fort Bend and beyond.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#" class="btn-primary inline-block">Give Online</a>
+        <a href="#" class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg border-2 border-green-500 text-green-700 font-semibold hover:bg-green-100 transition-colors focus-visible:outline-2 focus-visible:outline-green-500">
+          Annual Report
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <!-- Brand -->
+        <div class="lg:col-span-1">
+          <img src="brand-assets/fbcc-web-logo1-244x81.png" alt="Fort Bend Community Church" class="h-10 w-auto mb-4 brightness-0 invert opacity-80" />
+          <p class="text-sm leading-relaxed mb-4" style="line-height: 1.7;">A multigenerational, multilingual community of faith in Missouri City, TX.</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-9 h-9 rounded-lg bg-gray-800 hover:bg-green-600 flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-green-500" aria-label="Facebook">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-gray-800 hover:bg-green-600 flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-green-500" aria-label="YouTube">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-gray-800 hover:bg-green-600 flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-green-500" aria-label="Instagram">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#about" class="hover:text-green-400 transition-colors">About Us</a></li>
+            <li><a href="#sermons" class="hover:text-green-400 transition-colors">Sermons</a></li>
+            <li><a href="#events" class="hover:text-green-400 transition-colors">Events</a></li>
+            <li><a href="#ministries" class="hover:text-green-400 transition-colors">Ministries</a></li>
+            <li><a href="#give" class="hover:text-green-400 transition-colors">Give Online</a></li>
+            <li><a href="#" class="hover:text-green-400 transition-colors">Church Directory</a></li>
+          </ul>
+        </div>
+
+        <!-- Campuses -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Campuses</h4>
+          <ul class="space-y-2 text-sm">
+            <li class="text-gray-300 font-medium">Missouri City (Main)</li>
+            <li class="text-gray-500">7707 Hwy 6, Missouri City, TX 77459</li>
+            <li class="mt-3 text-gray-300 font-medium">Pearland Campus</li>
+            <li class="mt-3 text-gray-300 font-medium">Richmond Campus</li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <a href="mailto:secretary@fbcchome.org" class="hover:text-green-400 transition-colors">secretary@fbcchome.org</a>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              <a href="tel:+12814992131" class="hover:text-green-400 transition-colors">(281) 499-2131</a>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>7707 Hwy 6<br/>Missouri City, TX 77459</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+        <p>© 2026 Fort Bend Community Church. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-gray-400 transition-colors">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    let isOpen = false;
+
+    toggle.addEventListener('click', () => {
+      isOpen = !isOpen;
+      menu.classList.toggle('open', isOpen);
+      iconOpen.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Sticky nav scroll handler
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Close mobile menu when a link is clicked
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        isOpen = false;
+        menu.classList.remove('open');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>
