@@ -125,14 +125,6 @@
       background: #5DB827; border-radius: 1px; flex-shrink: 0;
     }
 
-    /* ── Ticker ────────────────────────── */
-    @keyframes ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .ticker-track { display: flex; animation: ticker 28s linear infinite; width: max-content; }
-    .ticker-track:hover { animation-play-state: paused; }
-
     /* ── Pastor card ───────────────────── */
     .pastor-card {
       background: white; border-radius: 1.25rem;
@@ -310,9 +302,18 @@
       </div>
     </div>
 
-    <!-- Right: Image collage panel -->
+    <!-- Right: Video panel -->
     <div class="relative lg:w-[48%] min-h-[50vh] lg:min-h-0 order-1 lg:order-2 overflow-hidden">
-      <img src="https://placehold.co/900x1100/1a3a2a/5DB827?text=Chinese+Ministry" alt="中文堂敬拜" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0" style="top:-20%; bottom:-20%;">
+        <iframe
+          src="https://www.youtube.com/embed/T-h__sLdEOM?autoplay=1&mute=1&loop=1&playlist=T-h__sLdEOM&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&modestbranding=1&iv_load_policy=3"
+          frameborder="0"
+          allow="autoplay; fullscreen"
+          class="w-full h-full"
+          style="pointer-events:none;"
+          title="中文堂敬拜"
+        ></iframe>
+      </div>
       <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26,40,50,0.3) 0%, transparent 60%), linear-gradient(to bottom, transparent 60%, rgba(26,40,50,0.7) 100%);"></div>
 
       <!-- Floating service badge -->
@@ -335,29 +336,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ══════════════════════════════════════
-       ANNOUNCEMENT TICKER
-  ══════════════════════════════════════ -->
-  <div class="bg-green-500 py-3 overflow-hidden">
-    <div class="ticker-track">
-      <span class="inline-flex items-center gap-8 px-8 text-white font-sans text-sm font-medium whitespace-nowrap">
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年聖經背誦比賽正式開始，歡迎各年齡層參加</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 四旬期靈修活動：2026 年 3 月 — 歡迎一同禁食禱告</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年愛心體育義賣，支持宣教事工</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 冬令營報名進行中，名額有限，請盡早報名</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 小組查經報名：各時段均有名額，歡迎加入</span>
-      </span>
-      <!-- Duplicate for seamless loop -->
-      <span class="inline-flex items-center gap-8 px-8 text-white font-sans text-sm font-medium whitespace-nowrap" aria-hidden="true">
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年聖經背誦比賽正式開始，歡迎各年齡層參加</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 四旬期靈修活動：2026 年 3 月 — 歡迎一同禁食禱告</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 2026 年愛心體育義賣，支持宣教事工</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 冬令營報名進行中，名額有限，請盡早報名</span>
-        <span class="flex items-center gap-2"><span class="opacity-60">✦</span> 小組查經報名：各時段均有名額，歡迎加入</span>
-      </span>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════════════
        SERVICE TIMES
